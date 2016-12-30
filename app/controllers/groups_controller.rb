@@ -3,26 +3,29 @@ class GroupsController < ApplicationController
     @groups = Group.all
   end
 
-  def edit
+def edit
   @group = Group.find(params[:id])
  end
 
-  def show
+def show
    @group = Group.find(params[:id])
  end
 
-  def new
+def new
     @group = Group.new
   end
 
-  def create
-   @group = Group.new(group_params)
-   @group.save
+def create
+    @group = Group.new(group_params)
 
+   if @group.save
      redirect_to groups_path
- end
+   else
+     render :new
+   end
+end
 
- def update
+def update
     @group = Group.find(params[:id])
 
     @group.update(group_params)
@@ -30,7 +33,7 @@ class GroupsController < ApplicationController
     redirect_to groups_path, notice: "Update Success"
   end
 
-  def destroy
+def destroy
     @group = Group.find(params[:id])
     @group.destroy
     flash[:alert] = "Group deleted"
